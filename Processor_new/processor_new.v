@@ -14,6 +14,9 @@ module processor
 	input reset
 );
 
+wire 		[RAM_WIDTH-1:0]		currInsrt;
+wire		[RAM_WIDTH-1:0]		immediate;
+
 
 reg  		[RAM_WIDTH-1:0]     INSRT;
 reg  		[RAM_WIDTH-1:0]		PROG_ADDR_OUT;
@@ -165,14 +168,24 @@ always@* branch = pc4 + INSRT[31:25][11:7];
 
 ALU 
 #(
-
+	.WIDTH          (RAM_WIDTH)
 )
 isnt_ALU
 (
-	.clk			(clk)
-    .reset			(reset)
-    .ALU_CONTROL	()
-    .oprend_1		(opr1)
-    .oprend_2		(opr2)
-    .alu_out		()
+	.branch_execution	(clk),
+    .ALU_result 		(reset),
+    .oprend_2			(),
+    .oprend_1			(opr1),
+    .Func7				(),
+    .Func3				(),
 )
+
+//Immediate generation
+Immediate ImmGen
+#(
+	.width		(RAM_WIDTH)
+)	
+(
+	.current_insrt		(currInsrt),
+    .immediate			(immediate)
+);

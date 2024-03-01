@@ -4,8 +4,8 @@ module ALU
 	parameter WIDTH   =32
 )
 (
-	input   		      Func3,
-	input   		      Func7,
+	input   [2:0]		  Func3,
+	input   [7:0]		  Func7,
 	input   [WIDTH-1:0]   oprend_1,
 	input   [WIDTH-1:0]   oprend_2,
 	output  [WIDTH-1:0]	  ALU_result,
@@ -69,3 +69,4 @@ assign branch_execution =   (Func3 == 3'b000) ? BEQ  :
 							(Func3 == 3'b110) ? BLTU :
 							(Func3 == 3'b111) ? BGEU ;
 	
+endmodule
